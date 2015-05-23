@@ -211,10 +211,10 @@ namespace ContactsBackEnd.DATA.Repositories
         {
             try
             {
-                var contactExists = GetContactById(contact.Id);
+                var contactExists = GetContactByEmail(contact.Email);
                 if (contactExists != null)
                 {
-                    throw new Exception($"Entity {contact.Id} already exists in database!");
+                    throw new Exception($"Entity {contact.Email} already exists in database!");
                 }
                 _conn = new SqlConnection(ConnString);
 
@@ -336,7 +336,7 @@ namespace ContactsBackEnd.DATA.Repositories
             _conn = new SqlConnection(ConnString);
 
             var sqlComm = _conn.CreateCommand();
-            sqlComm.CommandText = @"DELETE FROM CrfCodes WHERE [ID] = @Id;";
+            sqlComm.CommandText = @"DELETE FROM Contacts WHERE [ID] = @Id;";
             sqlComm.Parameters.Add("@Id", SqlDbType.Int);
             sqlComm.Parameters["@Id"].Value = id;
 
