@@ -31,13 +31,27 @@ namespace ContactsBackEnd.WEBAPI
                 options.OutputFormatters.Insert(0, jsonFormatter);
 
             });
+
             services.AddTransient<IContactsRepository, ContactsRepository>();
+
+            services.ConfigureCors(options =>
+            {
+                options.AddPolicy(
+                    "CorsTutaureliaNet",
+                    builder =>
+                    {
+                        builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
+                    });
+            });
+
         }
-
-
+        
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseStaticFiles();
+
+            app.UseCors("CorsTutaureliaNet");
+
             app.UseMvc();
         }
     }

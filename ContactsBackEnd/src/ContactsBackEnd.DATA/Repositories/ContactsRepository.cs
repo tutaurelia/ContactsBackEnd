@@ -289,29 +289,29 @@ namespace ContactsBackEnd.DATA.Repositories
                 cmd.Parameters.Add("@Id", SqlDbType.Int);
                 cmd.Parameters["@Id"].Value = id;
 
-                cmd.Parameters.Add("@FirstName", SqlDbType.VarChar);
-                cmd.Parameters["@FirstName"].Value = contact.FirstName;
+                cmd.Parameters.Add("@paramFirstName", SqlDbType.VarChar);
+                cmd.Parameters["@paramFirstName"].Value = contact.FirstName;
 
-                cmd.Parameters.Add("@LastName", SqlDbType.VarChar);
-                cmd.Parameters["@LastName"].Value = contact.LastName;
+                cmd.Parameters.Add("@paramLastName", SqlDbType.VarChar);
+                cmd.Parameters["@paramLastName"].Value = contact.LastName;
 
-                cmd.Parameters.Add("@Address", SqlDbType.VarChar);
-                cmd.Parameters["@Address"].Value = contact.Address;
+                cmd.Parameters.Add("@paramAddress", SqlDbType.VarChar);
+                cmd.Parameters["@paramAddress"].Value = contact.Address;
 
-                cmd.Parameters.Add("@ZipCode", SqlDbType.Int);
-                cmd.Parameters["@ZipCode"].Value = contact.ZipCode;
+                cmd.Parameters.Add("@paramZipCode", SqlDbType.Int);
+                cmd.Parameters["@paramZipCode"].Value = contact.ZipCode;
 
-                cmd.Parameters.Add("@City", SqlDbType.VarChar);
-                cmd.Parameters["@City"].Value = contact.City;
+                cmd.Parameters.Add("@paramCity", SqlDbType.VarChar);
+                cmd.Parameters["@paramCity"].Value = contact.City;
 
-                cmd.Parameters.Add("@Telephone", SqlDbType.VarChar);
-                cmd.Parameters["@Telephone"].Value = contact.Telephone;
+                cmd.Parameters.Add("@paramTelephone", SqlDbType.VarChar);
+                cmd.Parameters["@paramTelephone"].Value = contact.Telephone;
 
-                cmd.Parameters.Add("@Email", SqlDbType.VarChar);
-                cmd.Parameters["@Email"].Value = contact.Email;
+                cmd.Parameters.Add("@paramEmail", SqlDbType.VarChar);
+                cmd.Parameters["@paramEmail"].Value = contact.Email;
 
-                cmd.Parameters.Add("@BirthDate", SqlDbType.DateTime);
-                cmd.Parameters["@BirthDate"].Value = contact.BirthDate;
+                cmd.Parameters.Add("@paramBirthDate", SqlDbType.DateTime);
+                cmd.Parameters["@paramBirthDate"].Value = contact.BirthDate;
 
                 _conn.Open();
 
@@ -326,9 +326,6 @@ namespace ContactsBackEnd.DATA.Repositories
             {
                 _conn?.Close();
             }
-
-
-
         }
 
         public void Delete(int id)

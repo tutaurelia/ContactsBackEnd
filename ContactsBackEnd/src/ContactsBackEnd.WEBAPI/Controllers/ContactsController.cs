@@ -20,18 +20,33 @@ namespace ContactsBackEnd.WEBAPI.Controllers
         [HttpGet]
         public IEnumerable<Contact> Get(string query = "", int page = 0, int pageSize = 20)
         {
-            return _repo.GetAllContacts(query, page, pageSize);
+            try
+            {
+                return _repo.GetAllContacts(query, page, pageSize);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            
         }
 
         [HttpGet]
         [Route("{id}", Name = "GetByIdRoute")]
         public object Get(string id)
         {
-            var contactId = Convert.ToInt32(id);
+            try
+            {
+                var contactId = Convert.ToInt32(id);
 
-            var myEntity = _repo.GetContactById(contactId);
+                var myEntity = _repo.GetContactById(contactId);
 
-            return myEntity;
+                return myEntity;
+            }
+            catch (Exception)
+            {
+                return HttpBadRequest();
+            }
         }
 
         [HttpPost]
@@ -57,14 +72,15 @@ namespace ContactsBackEnd.WEBAPI.Controllers
         [Route("{id}")]
         public IActionResult Put(string id, [FromBody] Contact contact)
         {
-            var contactId = Convert.ToInt32(id);
-
-            if (!ModelState.IsValid)
-            {
-                return HttpBadRequest();
-            }
             try
             {
+                var contactId = Convert.ToInt32(id);
+
+                if (!ModelState.IsValid)
+                {
+                    return HttpBadRequest();
+                }
+
                 var originalContact = _repo.GetContactById(contactId);
                 if (originalContact == null) return HttpNotFound();
 
@@ -72,7 +88,7 @@ namespace ContactsBackEnd.WEBAPI.Controllers
 
                 return new ObjectResult(contact);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return HttpBadRequest();
             }
@@ -82,10 +98,10 @@ namespace ContactsBackEnd.WEBAPI.Controllers
         [Route("{id}")]
         public IActionResult Delete(string id)
         {
-            var contactId = Convert.ToInt32(id);
-
             try
             {
+                var contactId = Convert.ToInt32(id);
+
                 if (_repo.GetContactById(contactId) == null) return HttpNotFound();
                 _repo.Delete(contactId);
                 return new HttpStatusCodeResult(200);
