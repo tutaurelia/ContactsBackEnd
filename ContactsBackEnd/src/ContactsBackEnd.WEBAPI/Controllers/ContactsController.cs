@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using ContactsBackEnd.DATA.Entities;
 using ContactsBackEnd.DATA.Repositories;
 using Microsoft.AspNet.Mvc;
@@ -16,23 +15,30 @@ namespace ContactsBackEnd.WEBAPI.Controllers
             _repo = repo;
         }
 
-        // GET: api/values
         [HttpGet]
-        public IEnumerable<Contact> Get(string query = "", int page = 0, int pageSize = 20)
+        public object Get(string query = "", int page = 0, int pageSize = 20)
         {
             try
             {
-                return _repo.GetAllContacts(query, page, pageSize);
+                var totalCount = _repo.GetNumberOfContacts(query);
+                var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+                var contacts = _repo.GetAllContacts(query, page, pageSize);
+
+                return new
+                {
+                    TotalCount = totalCount,
+                    TotalPages = totalPages,
+                    Contacts = contacts
+                };
             }
             catch (Exception)
             {
                 return null;
             }
-            
         }
 
         [HttpGet]
-        [Route("{id}", Name = "GetByIdRoute")]
+        [Route("{id}", Name = "GetContactByIdRoute")]
         public object Get(string id)
         {
             try
@@ -59,7 +65,7 @@ namespace ContactsBackEnd.WEBAPI.Controllers
             try
             {
                 _repo.Insert(contact);
-                var url = Url.RouteUrl("GetByIdRoute", new { id = contact.Id}, Request.Scheme, Request.Host.ToUriComponent());
+                var url = Url.RouteUrl("GetContactByIdRoute", new { id = contact.Id }, Request.Scheme, Request.Host.ToUriComponent());
                 return Created(url, contact);
             }
             catch (Exception)
@@ -88,7 +94,7 @@ namespace ContactsBackEnd.WEBAPI.Controllers
 
                 return new ObjectResult(contact);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return HttpBadRequest();
             }
