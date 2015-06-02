@@ -207,7 +207,7 @@ namespace ContactsBackEnd.DATA.Repositories
             return contact;
         }
 
-        public void Insert(Contact contact)
+        public long Insert(Contact contact)
         {
             try
             {
@@ -219,12 +219,12 @@ namespace ContactsBackEnd.DATA.Repositories
                 _conn = new SqlConnection(ConnString);
 
                 var cmd = _conn.CreateCommand();
-
-                cmd.CommandText = @"INSERT INTO CrfCodes ([ID], [Code CRF]) VALUES (@contactId, @paramCodeCrf)";
+                                
                 cmd.CommandText =
                     @"INSERT INTO[dbo].[Contacts] (FirstName, LastName, [Address], ZipCode, City, Telephone, Email, BirthDate) 
-                    VALUES(@FirstName, @LastName,  @Address, @ZipCode, @City, @Telephone, @Email, @BirthDate)";
+                    VALUES(@FirstName, @LastName,  @Address, @ZipCode, @City, @Telephone, @Email, @BirthDate);SELECT CAST(scope_identity() AS int)";
 
+                
                 cmd.Parameters.Add("@FirstName", SqlDbType.VarChar);
                 cmd.Parameters["@FirstName"].Value = contact.FirstName;
 
@@ -248,14 +248,18 @@ namespace ContactsBackEnd.DATA.Repositories
 
                 cmd.Parameters.Add("@BirthDate", SqlDbType.DateTime);
                 cmd.Parameters["@BirthDate"].Value = contact.BirthDate;
-                
+                               
                 _conn.Open();
-                var number = cmd.ExecuteNonQuery();
 
-                if (number != 1)
+                try
+                {
+                    return  long.Parse(cmd.ExecuteScalar().ToString());
+                }
+                catch (Exception)
                 {
                     throw new Exception($"Entity {contact.FirstName} {contact.LastName} not inserted in database!");
                 }
+                
             }
             finally
             {

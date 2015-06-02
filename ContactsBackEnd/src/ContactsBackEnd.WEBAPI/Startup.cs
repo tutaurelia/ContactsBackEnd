@@ -43,7 +43,6 @@ namespace ContactsBackEnd.WEBAPI
                         builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
                     });
             });
-
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

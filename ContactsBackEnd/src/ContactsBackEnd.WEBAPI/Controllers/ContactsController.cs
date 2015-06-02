@@ -2,6 +2,7 @@
 using ContactsBackEnd.DATA.Entities;
 using ContactsBackEnd.DATA.Repositories;
 using Microsoft.AspNet.Mvc;
+using System.Collections.Generic;
 
 namespace ContactsBackEnd.WEBAPI.Controllers
 {
@@ -36,6 +37,7 @@ namespace ContactsBackEnd.WEBAPI.Controllers
                 return null;
             }
         }
+               
 
         [HttpGet]
         [Route("{id}", Name = "GetContactByIdRoute")]
@@ -45,9 +47,9 @@ namespace ContactsBackEnd.WEBAPI.Controllers
             {
                 var contactId = Convert.ToInt32(id);
 
-                var myEntity = _repo.GetContactById(contactId);
+                var myContact = _repo.GetContactById(contactId);
 
-                return myEntity;
+                return myContact;
             }
             catch (Exception)
             {
@@ -64,11 +66,11 @@ namespace ContactsBackEnd.WEBAPI.Controllers
             }
             try
             {
-                _repo.Insert(contact);
-                var url = Url.RouteUrl("GetContactByIdRoute", new { id = contact.Id }, Request.Scheme, Request.Host.ToUriComponent());
+                var contactId = _repo.Insert(contact);
+                var url = Url.RouteUrl("GetContactByIdRoute", new { id = contactId }, Request.Scheme, Request.Host.ToUriComponent());
                 return Created(url, contact);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return HttpBadRequest();
             }

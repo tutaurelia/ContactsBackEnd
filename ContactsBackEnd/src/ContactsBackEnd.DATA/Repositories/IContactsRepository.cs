@@ -10,7 +10,7 @@ namespace ContactsBackEnd.DATA.Repositories
         bool ContactExists(string email);
         Contact GetContactById(int id);
         Contact GetContactByEmail(string email);
-        void Insert(Contact contact);
+        long Insert(Contact contact);
         void Update(int id, Contact contact);
         void Delete(int id);
     }
