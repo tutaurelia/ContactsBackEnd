@@ -2,7 +2,6 @@
 using ContactsBackEnd.DATA.Entities;
 using ContactsBackEnd.DATA.Repositories;
 using Microsoft.AspNet.Mvc;
-using System.Collections.Generic;
 
 namespace ContactsBackEnd.WEBAPI.Controllers
 {
@@ -17,6 +16,7 @@ namespace ContactsBackEnd.WEBAPI.Controllers
         }
 
         [HttpGet]
+        // ReSharper disable once MethodOverloadWithOptionalParameter
         public object Get(string query = "", int page = 0, int pageSize = 20)
         {
             try
@@ -70,7 +70,7 @@ namespace ContactsBackEnd.WEBAPI.Controllers
                 var url = Url.RouteUrl("GetContactByIdRoute", new { id = contactId }, Request.Scheme, Request.Host.ToUriComponent());
                 return Created(url, contact);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return HttpBadRequest();
             }
