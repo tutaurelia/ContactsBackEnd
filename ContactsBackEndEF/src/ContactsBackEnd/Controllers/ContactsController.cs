@@ -1,9 +1,10 @@
 ﻿using System;
-using ContactsBackEnd.DATA.Entities;
-using ContactsBackEnd.DATA.Repositories;
+using ContactsBackEnd.Entities;
+using ContactsBackEnd.Repositories;
+using Microsoft.AspNet.Cors;
 using Microsoft.AspNet.Mvc;
 
-namespace ContactsBackEnd.WEBAPI.Controllers
+namespace ContactsBackEnd.Controllers
 {
     [Route("api/[Controller]/")]
     public class ContactsController : Controller
@@ -15,6 +16,7 @@ namespace ContactsBackEnd.WEBAPI.Controllers
             _repo = repo;
         }
 
+     
         [HttpGet]
         // ReSharper disable once MethodOverloadWithOptionalParameter
         public object Get(string query = "", int page = 0, int pageSize = 20)
@@ -32,12 +34,12 @@ namespace ContactsBackEnd.WEBAPI.Controllers
                     Contacts = contacts
                 };
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return HttpBadRequest();
             }
         }
-               
+
 
         [HttpGet]
         [Route("{id}", Name = "GetContactByIdRoute")]
@@ -63,19 +65,22 @@ namespace ContactsBackEnd.WEBAPI.Controllers
             if (!ModelState.IsValid)
             {
                 return HttpBadRequest();
+
             }
             try
             {
                 var contactId = _repo.Insert(contact);
                 var url = Url.RouteUrl("GetContactByIdRoute", new { id = contactId }, Request.Scheme, Request.Host.ToUriComponent());
                 return Created(url, contact);
+
             }
             catch (Exception)
             {
                 return HttpBadRequest();
+
             }
         }
-
+        
         [HttpPut]
         [Route("{id}")]
         public IActionResult Put(string id, [FromBody] Contact contact)
@@ -119,5 +124,22 @@ namespace ContactsBackEnd.WEBAPI.Controllers
                 return HttpBadRequest();
             }
         }
+
+        [HttpPost("reset")]
+        public IActionResult ResetDb()
+        {
+            try
+            {
+                _repo.ResetDataBase10Contacts();
+                return new HttpStatusCodeResult(200);
+            }
+            catch (Exception)
+            {
+                return HttpBadRequest();
+            }
+        }
+
+
+
     }
 }
