@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2382E8DE-C2BB-4994-AF7D-D5CB50CB39AB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7BD4DE0C-A819-43B8-9883-61F800414302}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ContactsBackEnd", "src\ContactsBackEnd\ContactsBackEnd.xproj", "{F458A0D5-C2DA-45F8-AD61-6C9248549C44}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F458A0D5-C2DA-45F8-AD61-6C9248549C44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F458A0D5-C2DA-45F8-AD61-6C9248549C44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F458A0D5-C2DA-45F8-AD61-6C9248549C44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F458A0D5-C2DA-45F8-AD61-6C9248549C44}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F458A0D5-C2DA-45F8-AD61-6C9248549C44} = {2382E8DE-C2BB-4994-AF7D-D5CB50CB39AB}
+	EndGlobalSection
+EndGlobal
