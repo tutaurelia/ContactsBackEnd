@@ -6,6 +6,4 @@ namespace ContactsBackEnd.Models
     {
         public DbSet<Contact> Contacts { get; set; }
     }
-
-
 }
